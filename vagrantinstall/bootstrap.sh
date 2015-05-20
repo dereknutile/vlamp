@@ -61,8 +61,8 @@ inst 'Git' git
 
 
 # Web server installs ##########################################################
-# Install Nginx
-inst 'Nginx' nginx
+# Install Apache
+inst 'Apache2' apache2
 
 # overwrite the nginx default server configuration for the vagrant app
 sudo cat > /etc/nginx/sites-available/default <<'EOF'
@@ -113,8 +113,7 @@ inst 'MySQL Client Library' libmysqlclient-dev
 
 # PHP setup ####################################################################
 inst mcrypt
-inst 'Installing PHP-FPM' php5-fpm php5-mysql php5-common php5-json php5-curl php5-gd php5-imagick php5-imap php5-mcrypt php5-memcached
-sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/mcrypt.ini
+inst 'Installing PHP' php5-mysql php5 php5-cli libapache2-mod-php5 php5-mcrypt php5-common php5-json php5-curl php5-gd php5-imagick php5-imap php5-memcached
 echo Install Composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/
 mv /usr/local/bin/composer.phar /usr/local/bin/composer
@@ -125,13 +124,9 @@ echo Composer update
 
 
 # Service setup ################################################################
-# Restart Nginx
-echo Restarting Nginx
-service nginx restart
-
-# Restart PHP-FPM
-echo Restarting PHP-FPM
-service php5-fpm restart
+# Restart Apache2
+echo Restarting Apache2
+service apache2 restart
 
 # Restart MySQL
 echo Restarting MySQL
