@@ -67,7 +67,7 @@ inst 'Apache2' apache2
 # overwrite the default Apache2 server configuration for the vagrant app
 sudo echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Backup and link the default apache directory
-sudo mv html/ html.original
+sudo mv /var/www/html/ /var/www/html.original
 sudo ln -s /vagrant/public /var/www/html
 ################################################################################
 
