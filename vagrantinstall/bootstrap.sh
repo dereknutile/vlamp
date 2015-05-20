@@ -64,30 +64,16 @@ inst 'Git' git
 # Install Apache
 inst 'Apache2' apache2
 
-# overwrite the nginx default server configuration for the vagrant app
-sudo cat > /etc/nginx/sites-available/default <<'EOF'
-server {
-  listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
-
-  root /vagrant/public;
-  index index.php index.html index.htm;
-
-  server_name localhost;
-
-  location / {
-    try_files $uri $uri/ =404;
-  }
-
-  location ~ \.php$ {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php5-fpm.sock;
-    fastcgi_index index.php;
-    include fastcgi_params;
-  }
-}
+# overwrite the default Apache2 server configuration for the vagrant app
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.original
+sudo cat > /etc/apache2/sites-available/000-default.conf <<'EOF'
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /vagrant/public
+  ErrorLog /vagrant/logs/apache-error.log
+  CustomLog /vagrant/logs/apache-access.log combined
+</VirtualHost>
 EOF
-
 ################################################################################
 
 
@@ -112,12 +98,11 @@ inst 'MySQL Client Library' libmysqlclient-dev
 
 
 # PHP setup ####################################################################
-inst mcrypt
-inst 'Installing PHP' php5-mysql php5 php5-cli libapache2-mod-php5 php5-mcrypt php5-common php5-json php5-curl php5-gd php5-imagick php5-imap php5-memcached
+inst 'Mcrypt' mcrypt
+inst 'Installing PHP and libraries' php5-mysql php5 php5-cli libapache2-mod-php5 php5-mcrypt php5-common php5-json php5-curl php5-gd php5-imagick php5-imap php5-memcached
 echo Install Composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/
 mv /usr/local/bin/composer.phar /usr/local/bin/composer
-/usr/local/bin/composer global require drush/drush
 echo Composer update
 /usr/local/bin/composer global update
 ################################################################################
