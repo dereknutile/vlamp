@@ -65,15 +65,10 @@ inst 'Git' git
 inst 'Apache2' apache2
 
 # overwrite the default Apache2 server configuration for the vagrant app
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.original
-sudo cat > /etc/apache2/sites-available/000-default.conf <<'EOF'
-<VirtualHost *:80>
-  ServerAdmin webmaster@localhost
-  DocumentRoot /vagrant/public
-  ErrorLog /vagrant/logs/apache-error.log
-  CustomLog /vagrant/logs/apache-access.log combined
-</VirtualHost>
-EOF
+sudo echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# Backup and link the default apache directory
+sudo mv html/ html.original
+sudo ln -s /vagrant/public /var/www/html
 ################################################################################
 
 
