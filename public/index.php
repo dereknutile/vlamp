@@ -48,7 +48,7 @@
   <body>
     <div class="container">
       <div class="content">
-        <div class="title"><?php echo "Your Vagrant LAMP installation good to go!"; ?></div>
+        <div class="title"><?php echo "Your Vagrant LAMP installation is good to go!"; ?></div>
         <p>This index.php file is located in the root of this installation under <code>/public/</code>.  You can delete this index.php file and start developing your code in the public directory now!</p>
         <p>The <a href="https://github.com/dereknutile/vlamp" target="_blank">VLAMP Github repository</a> has more information about the default server configuration, installed software, and tools.</p>
       </div><!-- /.content -->
