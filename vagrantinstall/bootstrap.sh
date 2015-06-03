@@ -98,6 +98,8 @@ inst 'Installing PHP and libraries' php5-mysql php5 php5-cli libapache2-mod-php5
 echo Install Composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/
 mv /usr/local/bin/composer.phar /usr/local/bin/composer
+echo "Adding /vagrant/bin to path."
+echo 'export PATH="/home/vagrant/.composer/vendor/bin:$PATH"' >> /home/vagrant/.bashrc
 echo Composer update
 /usr/local/bin/composer global update
 ################################################################################
